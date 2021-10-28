@@ -1,0 +1,54 @@
+#ifndef ASM_H_INCLUDED
+#define ASM_H_INCLUDED
+
+#include <stddef.h>
+
+typedef struct {
+
+   const char* command_name;
+   char command_code;
+   int args_exist;
+} COMMAND;
+
+typedef struct {
+
+    size_t file_sz;
+    char* text;
+    char* file_name;
+    FILE* file;
+} FILE_READ;
+
+const int NUMBER_OF_COMMANDS = 8;
+
+#define command_add(name, code, args_exist, number)                \
+        commands_arr[number].command_name = name;                  \
+        commands_arr[number].command_code = code;                  \
+        commands_arr[number].args_exist = args_exist;
+
+//READING CODE.TXT
+int FileRead(FILE_READ* file_to_read);
+int FileSize(FILE_READ* file_to_read);
+void ErrorTreatment(int err, const char* func_name, size_t n_line);
+
+#define Dump(err) \
+        ErrorTreatment(err, __PRETTY_FUNCTION__, __LINE__)
+
+typedef enum {
+
+    OPEN_ERR = 10,
+    READ_ERR = 11,
+    END_ERR = 12,
+    BUF_MEM_ERR = 13
+} FILE_READ_ERRORS_LIST;
+
+typedef enum {
+
+    VARIABLE_SIZE = 8,
+    COMMAND_SIZE  = 1
+} COMMANDS_ASSEMB;
+
+//-----------------
+
+int Assembler(FILE_READ* code, COMMAND com_arr[]);
+
+#endif // ASM_H_INCLUDED
