@@ -1,0 +1,14 @@
+:friday
+in
+in
+in
+in
+ja monday
+add
+jf friday
+:monday
+out
+hlt
+
+
+
